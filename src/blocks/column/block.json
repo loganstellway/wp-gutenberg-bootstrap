@@ -1,0 +1,26 @@
+{
+    "name": "loganstellway/bootstrap-column",
+    "category": "common",
+    "attributes": {
+        "xs": {
+            "type": "number",
+            "default": 6
+        },
+        "sm": {
+            "type": "number",
+            "default": 6
+        },
+        "md": {
+            "type": "number",
+            "default": 6
+        },
+        "lg": {
+            "type": "number",
+            "default": 6
+        },
+        "xl": {
+            "type": "number",
+            "default": 6
+        }
+    }
+}

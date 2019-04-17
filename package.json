@@ -1,0 +1,42 @@
+{
+  "name": "loganstellway-wp-gutenberg-bootstrap-blocks",
+  "version": "1.0.0",
+  "description": "Bootstrap blocks for Gutenberg",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint:scripts": "wp-scripts lint-js ./src",
+    "lint:styles": "wp-scripts lint-style './src/**/*.scss'"
+  },
+  "keywords": [
+    "gutenberg",
+    "bootstrap",
+    "blocks"
+  ],
+  "author": "Logan Stellway",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@wordpress/block-editor": "^2.0.0",
+    "@wordpress/components": "^7.3.0",
+    "@wordpress/compose": "^3.2.0",
+    "@wordpress/data": "^4.4.0",
+    "@wordpress/element": "^2.3.0",
+    "@wordpress/hooks": "^2.2.0",
+    "@wordpress/i18n": "^3.3.0",
+    "@wordpress/scripts": "^3.1.0",
+    "autoprefixer": "^9.5.1",
+    "bootstrap": "^4.3.1",
+    "classnames": "^2.2.6",
+    "css-loader": "^2.1.1",
+    "lodash": "^4.17.11",
+    "memize": "^1.0.5",
+    "mini-css-extract-plugin": "^0.6.0",
+    "node-sass": "^4.11.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.30.0"
+  },
+  "dependencies": {}
+}

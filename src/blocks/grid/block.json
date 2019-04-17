@@ -1,0 +1,22 @@
+{
+    "name": "loganstellway/bootstrap-grid",
+    "category": "layout",
+    "attributes": {
+        "columns": {
+            "type": "number",
+            "default": 2
+        },
+        "width": {
+            "type": "string",
+            "default": "container"
+        },
+        "verticalAlignment": {
+            "type": "string",
+            "default": "align-items-start"
+        },
+        "gutter": {
+            "type": "boolean",
+            "default": true
+        }
+    }
+}

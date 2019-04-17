@@ -1,0 +1,19 @@
+/**
+ * Bootstrap dependencies
+ */
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/grid";
+
+.container > .row {
+	display: block;
+	margin-left: 0;
+	margin-right: 0;
+
+	& > .editor-inner-blocks {
+		& > .editor-block-list__layout {
+			@extend .row;
+		}
+	}
+}

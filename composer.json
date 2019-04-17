@@ -1,0 +1,17 @@
+{
+    "name": "loganstellway/wp-gutenberg-bootstrap",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "description": "Bootstrap blocks for WordPress editor Gutenberg",
+    "homepage": "https://github.com/loganstellway/wp-gutenberg-bootstrap/issues",
+    "keywords": [
+        "wordpress", "gutenberg", "bootstrap"
+    ],
+    "support": {
+        "issues": "https://github.com/loganstellway/wp-gutenberg-bootstrap/issues",
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "composer/installers": "~1.0"
+    }
+}
