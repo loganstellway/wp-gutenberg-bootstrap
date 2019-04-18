@@ -14,5 +14,5 @@ Adds Bootstrap blocks to Gutenberg
 **Install with Composer**
 
 ```
-composer install loganstellway/wp-gutenberg-bootstrap
+composer require loganstellway/wp-gutenberg-bootstrap
 ```
