@@ -48,7 +48,7 @@ export const getRowClass = ( attributes, className = null ) => {
  */
 export const getColumnClass = ( attributes, className = null ) => {
     const { xs, sm, md, lg, xl } = attributes;
-    return classnames( className, 'col', {
+    return classnames( className, {
         [ `col-xs-${ xs }` ]: xs,
         [ `col-sm-${ sm }` ]: sm,
         [ `col-md-${ md }` ]: md,
