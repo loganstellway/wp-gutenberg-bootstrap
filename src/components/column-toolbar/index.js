@@ -31,6 +31,7 @@ const ColumnIcons = {
     md: 'tablet',
     lg: 'laptop',
     xl: 'desktop',
+    all: 'welcome-view-site',
 };
 
 const ColumnLabels = {
@@ -39,28 +40,27 @@ const ColumnLabels = {
     md: __( 'Tablet' ),
     lg: __( 'Laptop' ),
     xl: __( 'Desktop' ),
+    all: __( 'All Breakpoints' ),
 };
 
 export default withState( {
     size: 1,
 } )( ( { icon = false, breakpoint, isCollapsed = true, value, onChange, sizeControls = DEFAULT_SIZE_CONTROLS } ) => {
-    const controls = sizeControls.map( ( control ) => {
-        const { size } = control;
-        return {
-            ...control,
-            isActive: value === size,
-            onClick: () => {
-                onChange( size );
-            },
-        };
-    } );
-
     return (
         <Toolbar
             isCollapsed={ isCollapsed }
             icon={ icon ? icon : ColumnIcons[breakpoint] }
             label={ ColumnLabels[breakpoint] }
-            controls={ controls }
+            controls={ sizeControls.map( ( control ) => {
+                const { size } = control;
+                return {
+                    ...control,
+                    isActive: value === size,
+                    onClick: () => {
+                        onChange( size );
+                    },
+                };
+            } ) }
         />
     );
 } );

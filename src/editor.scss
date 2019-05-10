@@ -1,12 +1,31 @@
 /**
+ * Bootstrap variables
+ */
+
+ // Additional Embed Ratios
+$embed-responsive-aspect-ratios: (
+  (4 1),
+  (3 2),
+  (3 1),
+  (2 1),
+);
+
+// Overflow
+$overflows: auto, hidden, visible;
+
+/**
  * Bootstrap dependencies
  */
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities/embed";
+@import "~bootstrap/scss/utilities/overflow";
+@import "~bootstrap/scss/utilities/flex";
 
-.container > .row {
+.container > .row,
+.container-fluid > .row {
 	display: block;
 	margin-left: 0;
 	margin-right: 0;

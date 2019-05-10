@@ -2,6 +2,53 @@
     "name": "loganstellway/bootstrap-grid",
     "category": "layout",
     "attributes": {
+        "bgUrl": {
+            "type": "string"
+        },
+        "bgType": {
+            "type": "string"
+        },
+        "bgId": {
+            "type": "number"
+        },
+        "bgAttachment": {
+            "type": "string",
+            "default": "scroll"
+        },
+        "bgPosition": {
+            "type": "string",
+            "default": "50% 50%"
+        },
+        "addBgColor": {
+            "type": "boolean",
+            "default": false
+        },
+        "bgColor": {
+            "type": "object",
+            "default": {
+                "hex": "transparent"
+            }
+        },
+        "addMaskColor": {
+            "type": "boolean",
+            "default": false
+        },
+        "maskColor": {
+            "type": "object",
+            "default": {
+                "hex": "transparent"
+            }
+        },
+        "addTextColor": {
+            "type": "boolean",
+            "default": false
+        },
+        "textColor": {
+            "type": "object",
+            "default": {
+                "hex": "inherit"
+            }
+        },
         "columns": {
             "type": "number",
             "default": 2
@@ -17,6 +64,9 @@
         "gutter": {
             "type": "boolean",
             "default": true
+        },
+        "rowClass": {
+            "type": "string"
         }
     }
 }
