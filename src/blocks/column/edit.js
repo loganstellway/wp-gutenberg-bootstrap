@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { InspectorControls, InnerBlocks, BlockControls, MediaUpload, MediaUploadCheck } from '@wordpress/editor';
+import { InspectorControls, BlockControls, InnerBlocks, MediaUpload, MediaUploadCheck } from '@wordpress/editor';
 import { withSelect } from '@wordpress/data';
 import { compose, createHigherOrderComponent } from '@wordpress/compose';
 import { BaseControl, PanelBody, ToggleControl, SelectControl, ColorPicker, Button, ButtonGroup } from '@wordpress/components';
@@ -13,9 +13,12 @@ import { addFilter } from '@wordpress/hooks';
  * Internal Dependencies
  */
 import { getColumnClass, getBackgroundColor, getBackgroundStyles } from '../grid/utils';
-import BootstrapColumnToolbar from '../../components/column-toolbar';
+import ColumnSizeToolbar from '../../components/column-size-toolbar';
+import VerticalAlignToolbar from '../../components/vertical-align-toolbar';
+import AlignContentToolbar from '../../components/align-content-toolbar';
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const bgInstructions = <p>{ __( 'To edit the background image, you need permission to upload media.' ) }</p>;
+const breakpoints = [ 'xs', 'sm', 'md', 'lg', 'xl' ];
 
 /**
  * Add column class to containers
@@ -57,7 +60,7 @@ addFilter( 'editor.BlockListBlock', 'loganstellway/bootstrap-column-edit-classes
  */
 const ColumnEdit = ( { attributes, setAttributes, className } ) => {
     // Attributes
-    const { xs, sm, md, lg, xl, bgUrl, bgId, bgAttachment, addBgColor, bgColor, addMaskColor, maskColor, bgPosition, addTextColor, textColor } = attributes;
+    const { bgUrl, bgId, bgAttachment, addBgColor, bgColor, addMaskColor, maskColor, bgPosition, addTextColor, textColor } = attributes;
 
     // Background Media
     const onSelectBackground = ( media ) => {
@@ -80,6 +83,11 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
     };
 
     // Titles
+    const columnTitle = (
+        <span className="editor-panel-column-settings__panel-title">
+            { __("Size and Alignment") }
+        </span>
+    );
     const bgTitle = (
         <span className="editor-panel-background-settings__panel-title">
             { __("Background") }
@@ -95,6 +103,121 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
     return (
         <Fragment>
             <InspectorControls>
+            <PanelBody className="editor-panel-alignment-settings" title={ columnTitle }>
+                    <BaseControl label={ __('Column Size') }>
+                        <div style={ { overflowX: 'auto' } }>
+                            <table style={ { width: '100%' } }>
+                                <tbody>
+                                    <tr>
+                                        { breakpoints.map( (breakpoint) => {
+                                            return (
+                                                <td key={ breakpoint }>
+                                                    <ColumnSizeToolbar
+                                                        breakpoint={ breakpoint }
+                                                        value={ attributes[ breakpoint ] }
+                                                        onChange={ ( val ) => {
+                                                            let data = {};
+                                                            data[ breakpoint ] = val;
+                                                            setAttributes( data );
+                                                        } }
+                                                        />
+                                                </td>
+                                            );
+                                        } ) }
+                                        <td key="all">
+                                            <ColumnSizeToolbar
+                                                breakpoint='all'
+                                                onChange={ ( val ) => {
+                                                    let data = { sm: val, md: val, lg: val, xl: val };
+                                                    data[ 'xs' ] = val ? val : 6;
+                                                    setAttributes( data );
+                                                } }
+                                                />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </BaseControl>
+                    <BaseControl label={ __('Vertical Align') }>
+                        <div style={ { overflowX: 'auto' } }>
+                            <table style={ { width: '100%' } }>
+                                <tbody>
+                                    <tr>
+                                        { breakpoints.map( (breakpoint) => {
+                                            return (
+                                                <td key={ breakpoint }>
+                                                    <VerticalAlignToolbar
+                                                        breakpoint={ breakpoint }
+                                                        value={ attributes[ breakpoint + 'Align' ] }
+                                                        onChange={ ( val ) => {
+                                                            let data = {};
+                                                            data[ breakpoint + 'Align' ] = val;
+                                                            setAttributes( data );
+                                                        } }
+                                                        />
+                                                </td>
+                                            );
+                                        } ) }
+                                        <td key="all">
+                                            <VerticalAlignToolbar
+                                                breakpoint='all'
+                                                onChange={ ( val ) => {
+                                                    setAttributes( {
+                                                        xsAlign: val,
+                                                        smAlign: val,
+                                                        mdAlign: val,
+                                                        lgAlign: val,
+                                                        xlAlign: val,
+                                                    } );
+                                                } }
+                                                />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </BaseControl>
+                    <BaseControl label={ __('Align Content') }>
+                        <div style={ { overflowX: 'auto' } }>
+                            <table style={ { width: '100%' } }>
+                                <tbody>
+                                    <tr>
+                                        { breakpoints.map( (breakpoint) => {
+                                            return (
+                                                <td key={ breakpoint }>
+                                                    <AlignContentToolbar
+                                                        breakpoint={ breakpoint }
+                                                        value={ attributes[ breakpoint + 'Content' ] }
+                                                        onChange={ ( val ) => {
+                                                            let data = {};
+                                                            data[ breakpoint + 'Content' ] = val;
+                                                            setAttributes( data )
+                                                        } }
+                                                        />
+                                                </td>
+                                            );
+                                        } ) }
+                                        <td key="all">
+                                            <AlignContentToolbar
+                                                breakpoint='all'
+                                                onChange={ ( val ) => {
+                                                    setAttributes( {
+                                                        xsContent: val,
+                                                        smContent: val,
+                                                        mdContent: val,
+                                                        lgContent: val,
+                                                        xlContent: val,
+                                                    } )
+                                                } }
+                                                />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </BaseControl>
+                </PanelBody>
                 <PanelBody className="editor-panel-background-settings" title={ bgTitle }>
                     <BaseControl label={ __('Background Image') }>
                         <MediaUploadCheck fallback={ bgInstructions }>
@@ -233,55 +356,6 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                     }
                 </PanelBody>
             </InspectorControls>
-            <BlockControls>
-                <BootstrapColumnToolbar
-                    breakpoint='xs'
-                    value={ xs }
-                    onChange={ ( size ) => {
-                        setAttributes( { xs: size } )
-                    } }
-                    />
-                <BootstrapColumnToolbar
-                    breakpoint='sm'
-                    value={ sm }
-                    onChange={ ( size ) => {
-                        setAttributes( { sm: size } )
-                    } }
-                    />
-                <BootstrapColumnToolbar
-                    breakpoint='md'
-                    value={ md }
-                    onChange={ ( size ) => {
-                        setAttributes( { md: size } )
-                    } }
-                    />
-                <BootstrapColumnToolbar
-                    breakpoint='lg'
-                    value={ lg }
-                    onChange={ ( size ) => {
-                        setAttributes( { lg: size } )
-                    } }
-                    />
-                <BootstrapColumnToolbar
-                    breakpoint='xl'
-                    value={ xl }
-                    onChange={ ( size ) => {
-                        setAttributes( { xl: size } )
-                    } }
-                    />
-                <BootstrapColumnToolbar
-                    breakpoint='all'
-                    onChange={ ( size ) => {
-                        setAttributes( {
-                            xs: size,
-                            sm: size,
-                            md: size,
-                            lg: size,
-                            xl: size,
-                        } )
-                    } }
-                    />
-            </BlockControls>
             <InnerBlocks templateLock={ false } style={ getBackgroundStyles( attributes ) } />
         </Fragment>
     );

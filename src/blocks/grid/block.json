@@ -57,15 +57,56 @@
             "type": "string",
             "default": "container"
         },
-        "verticalAlignment": {
-            "type": "string",
-            "default": "align-items-start"
-        },
         "gutter": {
             "type": "boolean",
             "default": true
         },
         "rowClass": {
+            "type": "string"
+        },
+        "xsDir": {
+            "type": "string"
+        },
+        "smDir": {
+            "type": "string"
+        },
+        "mdDir": {
+            "type": "string"
+        },
+        "lgDir": {
+            "type": "string"
+        },
+        "xlDir": {
+            "type": "string"
+        },
+        "xsAlign": {
+            "type": "string"
+        },
+        "smAlign": {
+            "type": "string"
+        },
+        "mdAlign": {
+            "type": "string"
+        },
+        "lgAlign": {
+            "type": "string"
+        },
+        "xlAlign": {
+            "type": "string"
+        },
+        "xsJustify": {
+            "type": "string"
+        },
+        "smJustify": {
+            "type": "string"
+        },
+        "mdJustify": {
+            "type": "string"
+        },
+        "lgJustify": {
+            "type": "string"
+        },
+        "xlJustify": {
             "type": "string"
         }
     }

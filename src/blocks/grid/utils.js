@@ -38,8 +38,33 @@ export const getContainerClass = ( attributes, className = null ) => {
  * @return {string} HTML classes
  */
 export const getRowClass = ( attributes, className = null ) => {
-    const { verticalAlignment, gutter, rowClass } = attributes;
-    return classnames( 'row', className, verticalAlignment, rowClass, ( gutter ? '' : 'no-gutters' ) );
+    const { gutter, rowClass, xsDir, smDir, mdDir, lgDir, xlDir, xsAlign, smAlign, mdAlign, lgAlign, xlAlign, xsJustify, smJustify, mdJustify, lgJustify, xlJustify, } = attributes;
+
+    const dirs = { xs: xsDir, sm: smDir, md: mdDir, lg: lgDir, xl: xlDir };
+    const dir = [];
+    for ( var i in dirs ) {
+        if ( dirs[i] && dirs[i].length ) {
+            dir.push( 'flex-' + ( i == 'xs' ? '' : i + '-' ) + dirs[i] );
+        }
+    }
+
+    const aligns = { xs: xsAlign, sm: smAlign, md: mdAlign, lg: lgAlign, xl: xlAlign };
+    const align = [];
+    for ( var i in aligns ) {
+        if ( aligns[i] && aligns[i].length ) {
+            align.push( 'align-items-' + ( i == 'xs' ? '' : i + '-' ) + aligns[i] );
+        }
+    }
+
+    const justifys = { xs: xsJustify, sm: smJustify, md: mdJustify, lg: lgJustify, xl: xlJustify };
+    const justify = [];
+    for ( var i in justifys ) {
+        if ( justifys[i] && justifys[i].length ) {
+            justify.push( 'justify-content-' + ( i == 'xs' ? '' : i + '-' ) + justifys[i] );
+        }
+    }
+
+    return classnames( 'row', className, dir, align, justify, rowClass, ( gutter ? '' : 'no-gutters' ) );
 };
 
 /**
@@ -50,14 +75,31 @@ export const getRowClass = ( attributes, className = null ) => {
  * @return {string} HTML classes
  */
 export const getColumnClass = ( attributes, className = null ) => {
-    const { xs, sm, md, lg, xl } = attributes;
-    return classnames( className, 'position-relative', {
-        [ `col-${ xs }` ]: xs,
-        [ `col-sm-${ sm }` ]: sm,
-        [ `col-md-${ md }` ]: md,
-        [ `col-lg-${ lg }` ]: lg,
-        [ `col-xl-${ xl }` ]: xl,
-    } );
+    const { xs, sm, md, lg, xl, xsAlign, smAlign, mdAlign, lgAlign, xlAlign, xsContent, smContent, mdContent, lgContent, xlContent } = attributes;
+
+    const aligns = { xs: xsAlign, sm: smAlign, md: mdAlign, lg: lgAlign, xl: xlAlign };
+    const align = [];
+    for ( var i in aligns ) {
+        if ( aligns[i] && aligns[i].length ) {
+            align.push( 'align-self-' + ( i == 'xs' ? '' : i + '-' ) + aligns[i] );
+        }
+    }
+
+    const contents = { xs: xsContent, sm: smContent, md: mdContent, lg: lgContent, xl: xlContent };
+    const content = [];
+    for ( var i in contents ) {
+        if ( contents[i] && contents[i].length ) {
+            content.push( 'align-content-' + ( i == 'xs' ? '' : i + '-' ) + contents[i] );
+        }
+    }
+
+    return classnames( className, align, content, 'position-relative', [
+        `col-${ xs }`,
+        ( sm ? `col-sm-${ sm }` : ''),
+        ( md ? `col-md-${ md }` : ''),
+        ( lg ? `col-lg-${ lg }` : ''),
+        ( xl ? `col-xl-${ xl }` : ''),
+    ] );
 };
 
 /**

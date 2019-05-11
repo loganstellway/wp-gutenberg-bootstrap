@@ -55,19 +55,49 @@
         },
         "sm": {
             "type": "number",
-            "default": 6
+            "default": 0
         },
         "md": {
             "type": "number",
-            "default": 6
+            "default": 0
         },
         "lg": {
             "type": "number",
-            "default": 6
+            "default": 0
         },
         "xl": {
             "type": "number",
-            "default": 6
+            "default": 0
+        },
+        "xsAlign": {
+            "type": "string"
+        },
+        "smAlign": {
+            "type": "string"
+        },
+        "mdAlign": {
+            "type": "string"
+        },
+        "lgAlign": {
+            "type": "string"
+        },
+        "xlAlign": {
+            "type": "string"
+        },
+        "xsContent": {
+            "type": "string"
+        },
+        "smContent": {
+            "type": "string"
+        },
+        "mdContent": {
+            "type": "string"
+        },
+        "lgContent": {
+            "type": "string"
+        },
+        "xlContent": {
+            "type": "string"
         }
     }
 }
