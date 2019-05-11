@@ -1,56 +1,57 @@
 /**
  * Wordpress dependencies
  */
-const defaultConfig = require("./node_modules/@wordpress/scripts/config/webpack.config");
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 
 /**
  * Plugin dependencies
  */
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 /**
  * Environment
  */
-const mode = process.env.NODE_ENV || 'development';
-const production = mode === 'production';
+const production = process.env.NODE_ENV === 'production';
+const mode = production ? 'production' : 'development';
 
 /**
  * Webpack config
  */
 module.exports = {
   ...defaultConfig,
+  mode,
   entry: {
     ...defaultConfig.entry,
-    editor: ['./src/editor.scss']
+    editor: ['./src/editor.scss'],
+    client: ['./src/client.scss'],
   },
-  devtool: "source-map", // any "source-map"-like devtool is possible
+  devtool: production ? false : 'source-map', // any 'source-map'-like devtool is possible
   module: {
     ...defaultConfig.module,
     rules: [
       ...defaultConfig.module.rules,
       {
         test: /\.scss$/,
-        use: [{
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            sourceMap: !production
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: !production,
+            }
+          },
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('node-sass'),
+              sourceMap: !production,
+            }
           }
-        },
-        {
-          loader: "css-loader",
-          options: {
-            sourceMap: !production
-          }
-        },
-        {
-          loader: "sass-loader",
-          options: {
-            implementation: require('node-sass'),
-            sourceMap: !production
-          }
-        }]
+        ],
       }
     ],
   },
@@ -61,13 +62,8 @@ module.exports = {
   plugins: [
     ...defaultConfig.plugins,
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     }),
-    // new webpack.LoaderOptionsPlugin({
-    //   options: {
-    //     postcss: [autoprefixer()]
-    //   },
-    // }),
-  ]
+  ],
 };
