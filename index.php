@@ -45,8 +45,17 @@ if ( ! class_exists('\LoganStellway\Gutenberg\Bootstrap\Blocks') ) {
                 filemtime( plugin_dir_path( __FILE__ ) . 'build/editor.css' )
             );
         
+            // Client Style
+            wp_register_style(
+                'loganstellway-bootstrap-client',
+                plugins_url( 'build/client.css', __FILE__ ),
+                array( 'wp-edit-blocks' ),
+                filemtime( plugin_dir_path( __FILE__ ) . 'build/client.css' )
+            );
+        
             // Register block
             register_block_type( 'loganstellway/bootstrap', array(
+                'style' => 'loganstellway-bootstrap-client',
                 'editor_style' => 'loganstellway-bootstrap-editor',
                 'editor_script' => 'loganstellway-bootstrap-editor',
             ) );

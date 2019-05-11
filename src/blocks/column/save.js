@@ -14,7 +14,7 @@ export default function( { attributes, className } ) {
     return (
         <div className={ getColumnClass( attributes, className ) } style={ getBackgroundStyles( attributes ) }>
             <div
-                className="grid-mask--column embed-responsive-item"
+                className="grid-mask--column"
                 style={ {
                     backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ),
                 } }

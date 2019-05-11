@@ -3,7 +3,6 @@
  */
 import classnames from 'classnames';
 import memoize from 'memize';
-import { times } from 'lodash';
 
 /**
  * Returns the layouts configuration for a given number of columns.
@@ -11,8 +10,13 @@ import { times } from 'lodash';
  * @param  {number}   Number of columns.
  * @return {Object[]} Columns layout configuration.
  */
-export const getColumnsTemplate = memoize( ( columns ) => {
-    return times( columns, () => [ 'loganstellway/bootstrap-column' ] );
+export const getColumnsTemplate = memoize( ( cols ) => {
+    let data = [];
+    while ( cols > 0 ) {
+        data.push( [ 'loganstellway/bootstrap-column' ] );
+        cols--;
+    }
+    return data;
 } );
 
 /**
@@ -24,7 +28,7 @@ export const getColumnsTemplate = memoize( ( columns ) => {
  */
 export const getContainerClass = ( attributes, className = null ) => {
     const { width, columns } = attributes;
-    return classnames( className, `embed-responsive has-${ columns }-columns`, width );
+    return classnames( className, `position-relative has-${ columns }-columns`, width );
 };
 
 /**
@@ -47,7 +51,7 @@ export const getRowClass = ( attributes, className = null ) => {
  */
 export const getColumnClass = ( attributes, className = null ) => {
     const { xs, sm, md, lg, xl } = attributes;
-    return classnames( className, 'embed-responsive', {
+    return classnames( className, 'position-relative', {
         [ `col-${ xs }` ]: xs,
         [ `col-sm-${ sm }` ]: sm,
         [ `col-md-${ md }` ]: md,

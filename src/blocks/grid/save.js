@@ -15,7 +15,7 @@ export default function( { attributes, className } ) {
             style={ getBackgroundStyles( attributes ) }
         >
             <div
-                className="grid-mask--container embed-responsive-item"
+                className="grid-mask--container"
                 style={ {
                     backgroundColor: getBackgroundColor( attributes.maskColor ),
                 } }
