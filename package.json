@@ -4,7 +4,8 @@
   "description": "Bootstrap blocks for Gutenberg",
   "main": "src/index.js",
   "scripts": {
-    "build": "wp-scripts build",
+    "build": "NODE_ENV=development wp-scripts build",
+    "build:prod": "NODE_ENV=production wp-scripts build",
     "start": "wp-scripts start",
     "lint:scripts": "wp-scripts lint-js ./src",
     "lint:styles": "wp-scripts lint-style './src/**/*.scss'"
@@ -29,13 +30,12 @@
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
     "css-loader": "^2.1.1",
-    "lodash": "^4.17.11",
+    "cssnano": "^4.1.10",
     "memize": "^1.0.5",
     "mini-css-extract-plugin": "^0.6.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.12.0",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
     "webpack": "^4.30.0"
   },
   "dependencies": {}
