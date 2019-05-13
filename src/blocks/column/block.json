@@ -49,6 +49,10 @@
                 "hex": "inherit"
             }
         },
+        "textAlign": {
+            "type": "string",
+            "default": ""
+        },
         "xs": {
             "type": "number",
             "default": 6

@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { InspectorControls, BlockControls, InnerBlocks, MediaUpload, MediaUploadCheck } from '@wordpress/editor';
+import { InspectorControls, BlockControls, AlignmentToolbar, InnerBlocks, MediaUpload, MediaUploadCheck } from '@wordpress/editor';
 import { withSelect } from '@wordpress/data';
 import { compose, createHigherOrderComponent } from '@wordpress/compose';
 import { BaseControl, PanelBody, ToggleControl, SelectControl, ColorPicker, Button, ButtonGroup } from '@wordpress/components';
@@ -60,7 +60,7 @@ addFilter( 'editor.BlockListBlock', 'loganstellway/bootstrap-column-edit-classes
  */
 const ColumnEdit = ( { attributes, setAttributes, className } ) => {
     // Attributes
-    const { bgUrl, bgId, bgAttachment, addBgColor, bgColor, addMaskColor, maskColor, bgPosition, addTextColor, textColor } = attributes;
+    const { bgUrl, bgId, bgAttachment, addBgColor, bgColor, addMaskColor, maskColor, bgPosition, addTextColor, textColor, textAlign } = attributes;
 
     // Background Media
     const onSelectBackground = ( media ) => {
@@ -103,7 +103,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
     return (
         <Fragment>
             <InspectorControls>
-            <PanelBody className="editor-panel-alignment-settings" title={ columnTitle }>
+                <PanelBody className="editor-panel-alignment-settings" title={ columnTitle }>
                     <BaseControl label={ __('Column Size') }>
                         <div style={ { overflowX: 'auto' } }>
                             <table style={ { width: '100%' } }>
@@ -356,6 +356,15 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                     }
                 </PanelBody>
             </InspectorControls>
+            <BlockControls>
+                <AlignmentToolbar
+                    value={ textAlign }
+                    onChange={ ( align ) => {
+                        align = align === textAlign ? "" : align;
+                        setAttributes( { textAlign: align } );
+                    } }
+                />
+            </BlockControls>
             <InnerBlocks templateLock={ false } style={ getBackgroundStyles( attributes ) } />
         </Fragment>
     );

@@ -75,7 +75,7 @@ export const getRowClass = ( attributes, className = null ) => {
  * @return {string} HTML classes
  */
 export const getColumnClass = ( attributes, className = null ) => {
-    const { xs, sm, md, lg, xl, xsAlign, smAlign, mdAlign, lgAlign, xlAlign, xsContent, smContent, mdContent, lgContent, xlContent } = attributes;
+    const { textAlign, xs, sm, md, lg, xl, xsAlign, smAlign, mdAlign, lgAlign, xlAlign, xsContent, smContent, mdContent, lgContent, xlContent } = attributes;
 
     const aligns = { xs: xsAlign, sm: smAlign, md: mdAlign, lg: lgAlign, xl: xlAlign };
     const align = [];
@@ -93,7 +93,7 @@ export const getColumnClass = ( attributes, className = null ) => {
         }
     }
 
-    return classnames( className, align, content, 'position-relative', [
+    return classnames( className, align, content, ( textAlign ? 'text-' + textAlign : null ), 'position-relative', [
         `col-${ xs }`,
         ( sm ? `col-sm-${ sm }` : ''),
         ( md ? `col-md-${ md }` : ''),
