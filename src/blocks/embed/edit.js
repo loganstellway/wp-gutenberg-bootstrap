@@ -249,7 +249,7 @@ const EmbedResponsiveEdit = ( { attributes, setAttributes, className } ) => {
             </BlockControls>
             <div style={ { background: 'rgba(0, 0, 0, 0.03)' } }>
                 { grow && 
-                    <div className={ `tallest embed-responsive ${ className } ${ verticalAlign ? `align-${ verticalAlign }` : '' }` } style={ getBackgroundStyles( attributes ) }>
+                    <div className={ `tallest embed-responsive overflow-visible ${ className } ${ verticalAlign ? `align-${ verticalAlign }` : '' }` } style={ getBackgroundStyles( attributes ) }>
                         <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
                         <div className={ `tallest-item ${ getEmbedResponsiveClass( attributes ) }` }>
                             { getEmbedResponsiveCustom( attributes ) }
