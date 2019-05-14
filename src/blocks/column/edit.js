@@ -21,6 +21,28 @@ const bgInstructions = <p>{ __( 'To edit the background image, you need permissi
 const breakpoints = [ 'xs', 'sm', 'md', 'lg', 'xl' ];
 
 /**
+ * Add column class to containers
+ */
+addFilter( 'editor.BlockListBlock', 'loganstellway/bootstrap-column-edit-classes', createHigherOrderComponent( ( BlockListBlock ) => {
+    return ( props ) => {
+        const { block } = props;
+        const { attributes, name } = block;
+
+        if ( name == 'loganstellway/bootstrap-column' ) {
+            const { className, addMaskColor, maskColor } = attributes;
+            return (
+                <div className={ getColumnClass( attributes, `${ className || '' } overflow-visible` ) } style={ getBackgroundStyles( attributes ) }>
+                    <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
+                    <BlockListBlock { ...props } />
+                </div>
+            );
+        }
+
+        return ( <BlockListBlock { ...props } /> );
+    };
+} ) );
+
+/**
  * Column edit
  * 
  * @param  {object}   attributes
@@ -302,12 +324,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                     } }
                 />
             </BlockControls>
-            <div className={ getColumnClass( attributes, `${ className } overflow-visible` ) } style={ getBackgroundStyles( attributes ) }>
-                <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
-                <div className="bootstrap-grid--content">
-                    <InnerBlocks templateLock={ false } />
-                </div>
-            </div>
+            <InnerBlocks templateLock={ false } />
         </Fragment>
     );
 };

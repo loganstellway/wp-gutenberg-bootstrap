@@ -338,14 +338,12 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
             </InspectorControls>
             <div className={ getContainerClass( attributes, `${ className } overflow-visible` ) } style={ getBackgroundStyles( attributes ) }>
                 <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
-                <div className="bootstrap-grid--column">
-                    <div className={ getRowClass( attributes ) }>
-                        <InnerBlocks
-                            template={ getColumnsTemplate( columns ) }
-                            templateLock='all'
-                            allowedBlocks={ ALLOWED_BLOCKS }
-                        />
-                    </div>
+                <div className={ `bootstrap-grid--column ${getRowClass( attributes )}` }>
+                    <InnerBlocks
+                        template={ getColumnsTemplate( columns ) }
+                        templateLock='all'
+                        allowedBlocks={ ALLOWED_BLOCKS }
+                    />
                 </div>
             </div>
         </Fragment>

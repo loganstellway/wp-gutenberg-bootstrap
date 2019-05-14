@@ -45,9 +45,9 @@ export const getResponsiveAttribute = ( attributes, prefix, suffix ) => {
           vals = [];
 
     breakpoints.forEach( ( breakpoint, val ) => {
-        val = attributes[ `${ breakpoint }${ suffix || '' }` ] || null;
+        val = attributes[ `${ breakpoint }${ suffix || '' }` ] || 0;
 
-        if ( val && val.length ) {
+        if ( val && ( val.length || !isNaN( val ) ) ) {
             vals.push( `${ prefix }-${ breakpoint == 'xs' ? '' : `${ breakpoint }-` }${ val }` );
         }
     } );
