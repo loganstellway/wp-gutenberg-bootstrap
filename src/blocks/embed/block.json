@@ -1,0 +1,71 @@
+{
+    "name": "loganstellway/bootstrap-embed",
+    "category": "embed", 
+    "attributes": {
+        "ratio": {
+            "type": "string",
+            "default": "16by9"
+        },
+        "customX": {
+            "type": "number",
+            "default": 1
+        },
+        "customY": {
+            "type": "number",
+            "default": 1
+        },
+        "grow": {
+            "type": "boolean",
+            "default": false
+        },
+        "bgId": {
+            "type": "number"
+        },
+        "bgAttachment": {
+            "type": "string",
+            "default": "scroll"
+        },
+        "bgPosition": {
+            "type": "string",
+            "default": "50% 50%"
+        },
+        "addBgColor": {
+            "type": "boolean",
+            "default": false
+        },
+        "bgColor": {
+            "type": "object",
+            "default": {
+                "hex": "transparent"
+            }
+        },
+        "addMaskColor": {
+            "type": "boolean",
+            "default": false
+        },
+        "maskColor": {
+            "type": "object",
+            "default": {
+                "hex": "transparent"
+            }
+        },
+        "addTextColor": {
+            "type": "boolean",
+            "default": false
+        },
+        "textColor": {
+            "type": "object",
+            "default": {
+                "hex": "inherit"
+            }
+        },
+        "textAlign": {
+            "type": "string",
+            "default": ""
+        },
+        "verticalAlign": {
+            "type": "string",
+            "default": "top"
+        }
+    }
+}

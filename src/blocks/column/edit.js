@@ -12,43 +12,13 @@ import { addFilter } from '@wordpress/hooks';
 /**
  * Internal Dependencies
  */
-import { getColumnClass, getBackgroundColor, getBackgroundStyles } from '../grid/utils';
+import { getColumnClass, getBackgroundColor, getBackgroundStyles, getPanelTitle } from '../utils';
 import ColumnSizeToolbar from '../../components/column-size-toolbar';
 import VerticalAlignToolbar from '../../components/vertical-align-toolbar';
 import AlignContentToolbar from '../../components/align-content-toolbar';
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const bgInstructions = <p>{ __( 'To edit the background image, you need permission to upload media.' ) }</p>;
 const breakpoints = [ 'xs', 'sm', 'md', 'lg', 'xl' ];
-
-/**
- * Add column class to containers
- */
-addFilter( 'editor.BlockListBlock', 'loganstellway/bootstrap-column-edit-classes', createHigherOrderComponent( ( BlockListBlock ) => {
-    return ( props ) => {
-        const { block } = props;
-        const { attributes, name } = block;
-
-        if ( name == 'loganstellway/bootstrap-column' ) {
-            const { className, addMaskColor, maskColor } = attributes;
-            return (
-                <div
-                    className={ getColumnClass( attributes, (className || "") + " overflow-visible" ) }
-                    style={ getBackgroundStyles( attributes ) }
-                >
-                    <div
-                        className="grid-mask--column embed-responsive-item"
-                        style={ {
-                            backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ),
-                        } }
-                    />
-                    <BlockListBlock { ...props } />
-                </div>
-            );
-        }
-
-        return ( <BlockListBlock { ...props } /> );
-    };
-} ) );
 
 /**
  * Column edit
@@ -82,28 +52,11 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
         } );
     };
 
-    // Titles
-    const columnTitle = (
-        <span className="editor-panel-column-settings__panel-title">
-            { __("Size and Alignment") }
-        </span>
-    );
-    const bgTitle = (
-        <span className="editor-panel-background-settings__panel-title">
-            { __("Background") }
-        </span>
-    );
-    const colorTitle = (
-        <span className="editor-panel-color-settings__panel-title">
-            { __("Colors") }
-        </span>
-    );
-
     // Edit
     return (
         <Fragment>
             <InspectorControls>
-                <PanelBody className="editor-panel-alignment-settings" title={ columnTitle }>
+                <PanelBody className="editor-panel-alignment-settings" title={ getPanelTitle( 'alignment', __( 'Alignment' ) ) }>
                     <BaseControl label={ __('Column Size') }>
                         <div style={ { overflowX: 'auto' } }>
                             <table style={ { width: '100%' } }>
@@ -149,10 +102,10 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                                                 <td key={ breakpoint }>
                                                     <VerticalAlignToolbar
                                                         breakpoint={ breakpoint }
-                                                        value={ attributes[ breakpoint + 'Align' ] }
+                                                        value={ attributes[ `${ breakpoint }Align` ] }
                                                         onChange={ ( val ) => {
                                                             let data = {};
-                                                            data[ breakpoint + 'Align' ] = val;
+                                                            data[ `${ breakpoint }Align` ] = val;
                                                             setAttributes( data );
                                                         } }
                                                         />
@@ -188,10 +141,10 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                                                 <td key={ breakpoint }>
                                                     <AlignContentToolbar
                                                         breakpoint={ breakpoint }
-                                                        value={ attributes[ breakpoint + 'Content' ] }
+                                                        value={ attributes[ `${ breakpoint }Content` ] }
                                                         onChange={ ( val ) => {
                                                             let data = {};
-                                                            data[ breakpoint + 'Content' ] = val;
+                                                            data[ `${ breakpoint }Content` ] = val;
                                                             setAttributes( data )
                                                         } }
                                                         />
@@ -218,7 +171,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                         </div>
                     </BaseControl>
                 </PanelBody>
-                <PanelBody className="editor-panel-background-settings" title={ bgTitle }>
+                <PanelBody className="editor-panel-background-settings" title={ getPanelTitle( 'background', __( 'Background' ) ) }>
                     <BaseControl label={ __('Background Image') }>
                         <MediaUploadCheck fallback={ bgInstructions }>
                             <MediaUpload
@@ -260,9 +213,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                                 label={ __( 'Background Position' ) }
                                 value={ bgPosition }
                                 onChange={ ( behavior ) => {
-                                    setAttributes( {
-                                        bgPosition: behavior,
-                                    } )
+                                    setAttributes( { bgPosition: behavior } )
                                 } }
                                 options={ [
                                     { label: __('Left Top'), value: '0 0' },
@@ -280,9 +231,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                                 label={ __( 'Background Scroll Behavior' ) }
                                 value={ bgAttachment }
                                 onChange={ ( behavior ) => {
-                                    setAttributes( {
-                                        bgAttachment: behavior,
-                                    } )
+                                    setAttributes( { bgAttachment: behavior } )
                                 } }
                                 options={ [
                                     { label: __('Scroll (Default)'), value: 'scroll' },
@@ -292,14 +241,12 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                         </Fragment>
                     }
                 </PanelBody>
-                <PanelBody className="editor-panel-background-settings" title={ colorTitle }>
+                <PanelBody className="editor-panel-color-settings" title={ getPanelTitle( 'color', __( 'Color' ) ) }>
                     <ToggleControl
                         label={ __( 'Add Text Color?' ) }
                         checked={ addTextColor }
                         onChange={ ( use ) => {
-                            setAttributes( {
-                                addTextColor: use,
-                            } );
+                            setAttributes( { addTextColor: use } );
                         } }
                     />
                     {
@@ -307,9 +254,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                         <ColorPicker
                             color={ textColor }
                             onChangeComplete={ (color) => {
-                                setAttributes( {
-                                    textColor: color,
-                                } )
+                                setAttributes( { textColor: color } )
                             } }
                             disableAlpha
                         />
@@ -318,9 +263,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                         label={ __( 'Add Background Color?' ) }
                         checked={ addBgColor }
                         onChange={ ( use ) => {
-                            setAttributes( {
-                                addBgColor: use,
-                            } );
+                            setAttributes( { addBgColor: use } );
                         } }
                     />
                     {
@@ -328,9 +271,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                         <ColorPicker
                             color={ bgColor }
                             onChangeComplete={ (color) => {
-                                setAttributes( {
-                                    bgColor: color,
-                                } )
+                                setAttributes( { bgColor: color } )
                             } }
                         />
                     }
@@ -338,9 +279,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                         label={ __( 'Add Mask Color?' ) }
                         checked={ addMaskColor }
                         onChange={ ( use ) => {
-                            setAttributes( {
-                                addMaskColor: use,
-                            } );
+                            setAttributes( { addMaskColor: use } );
                         } }
                     />
                     {
@@ -348,9 +287,7 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                         <ColorPicker
                             color={ maskColor }
                             onChangeComplete={ (color) => {
-                                setAttributes( {
-                                    maskColor: color,
-                                } )
+                                setAttributes( { maskColor: color } )
                             } }
                         />
                     }
@@ -365,7 +302,12 @@ const ColumnEdit = ( { attributes, setAttributes, className } ) => {
                     } }
                 />
             </BlockControls>
-            <InnerBlocks templateLock={ false } style={ getBackgroundStyles( attributes ) } />
+            <div className={ getColumnClass( attributes, `${ className } overflow-visible` ) } style={ getBackgroundStyles( attributes ) }>
+                <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
+                <div className="bootstrap-grid--content">
+                    <InnerBlocks templateLock={ false } />
+                </div>
+            </div>
         </Fragment>
     );
 };

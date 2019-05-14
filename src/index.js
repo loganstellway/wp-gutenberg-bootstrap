@@ -14,12 +14,12 @@ import {
  */
 import * as column from './blocks/column';
 import * as grid from './blocks/grid';
-// import * as button from './blocks/button';
+import * as embed from './blocks/embed';
 
 [
     column,
     grid,
-    // button,
+    embed,
 ].forEach( block => {
     if ( ! block ) return;
     const { metadata, settings, name } = block;

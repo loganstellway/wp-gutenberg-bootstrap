@@ -11,7 +11,7 @@ import { PanelBody, BaseControl, TextControl, RangeControl, ToggleControl, Selec
 /**
  * Internal dependencies
  */
-import { getColumnsTemplate, getContainerClass, getRowClass, getBackgroundColor, getBackgroundStyles } from './utils';
+import { getColumnsTemplate, getContainerClass, getRowClass, getBackgroundColor, getBackgroundStyles, getPanelTitle } from '../utils';
 import FlexDirectionToolbar from '../../components/flex-direction-toolbar';
 import JustifyContentToolbar from '../../components/justify-content-toolbar';
 import VerticalAlignToolbar from '../../components/vertical-align-toolbar';
@@ -54,43 +54,16 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
         } );
     };
 
-    // Titles
-    const gridTitle = (
-        <span className="editor-panel-grid-settings__panel-title">
-            { __("Grid") }
-        </span>
-    );
-    const alignTitle = (
-        <span className="editor-panel-alignment-settings__panel-title">
-            { __("Alignment") }
-        </span>
-    );
-    const bgTitle = (
-        <span className="editor-panel-background-settings__panel-title">
-            { __("Background") }
-        </span>
-    );
-    const colorTitle = (
-        <span className="editor-panel-color-settings__panel-title">
-            { __("Colors") }
-        </span>
-    );
-
     // Edit
     return (
         <Fragment>
             <InspectorControls>
-                <PanelBody
-                    className="editor-panel-columns-settings"
-                    title={ gridTitle }
-                >
+                <PanelBody className="editor-panel-grid-settings" title={ getPanelTitle( 'grid', __( 'Grid' ) ) }>
                     <SelectControl
                         label={ __( 'Container Width' ) }
                         value={ width }
                         onChange={ ( newWidth ) => {
-                            setAttributes( {
-                                width: newWidth,
-                            } )
+                            setAttributes( { width: newWidth } )
                         } }
                         options={ [
                             { label: 'Fixed', value: 'container' },
@@ -101,9 +74,7 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         label={ __( 'Columns' ) }
                         value={ columns }
                         onChange={ ( numCols ) => {
-                            setAttributes( {
-                                columns: parseInt( numCols ),
-                            } );
+                            setAttributes( { columns: parseInt( numCols ) } );
                         } }
                         min={ 1 }
                         max={ 12 }
@@ -112,22 +83,18 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         label={ __( 'Gutter' ) }
                         checked={ gutter }
                         onChange={ ( useGutter ) => {
-                            setAttributes( {
-                                gutter: useGutter,
-                            } );
+                            setAttributes( { gutter: useGutter } );
                         } }
                     />
                     <TextControl
                         label={ __('Additional Row Classes') }
                         value={ rowClass }
                         onChange={ ( className ) => {
-                            setAttributes( {
-                                rowClass: className,
-                            } );
+                            setAttributes( { rowClass: className } );
                         } }
                     />
                 </PanelBody>
-                <PanelBody className="editor-panel-alignment-settings" title={ alignTitle }>
+                <PanelBody className="editor-panel-alignment-settings" title={ getPanelTitle( 'alignment', __( 'Alignment' ) ) }>
                     <BaseControl label={ __('Flex Direction') }>
                         <div style={ { overflowX: 'auto' } }>
                             <table style={ { width: '100%' } }>
@@ -138,10 +105,10 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                                                 <td key={ breakpoint }>
                                                     <FlexDirectionToolbar
                                                         breakpoint={ breakpoint }
-                                                        value={ attributes[ breakpoint + 'Dir' ] }
+                                                        value={ attributes[ `${ breakpoint }Dir` ] }
                                                         onChange={ ( val ) => {
                                                             let data = {};
-                                                            data[ breakpoint + 'Dir' ] = val;
+                                                            data[ `${ breakpoint }Dir` ] = val;
                                                             setAttributes( data )
                                                         } }
                                                         />
@@ -177,10 +144,10 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                                                 <td key={ breakpoint }>
                                                     <JustifyContentToolbar
                                                         breakpoint={ breakpoint }
-                                                        value={ attributes[ breakpoint + 'Justify' ] }
+                                                        value={ attributes[ `${ breakpoint }Justify` ] }
                                                         onChange={ ( val ) => {
                                                             let data = {};
-                                                            data[ breakpoint + 'Justify' ] = val;
+                                                            data[ `${ breakpoint }Justify` ] = val;
                                                             setAttributes( data )
                                                         } }
                                                         />
@@ -216,10 +183,10 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                                                 <td key={ breakpoint }>
                                                     <VerticalAlignToolbar
                                                         breakpoint={ breakpoint }
-                                                        value={ attributes[ breakpoint + 'Align' ] }
+                                                        value={ attributes[ `${ breakpoint }Align` ] }
                                                         onChange={ ( val ) => {
                                                             let data = {};
-                                                            data[ breakpoint + 'Align' ] = val;
+                                                            data[ `${ breakpoint }Align` ] = val;
                                                             setAttributes( data )
                                                         } }
                                                         />
@@ -246,7 +213,7 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         </div>
                     </BaseControl>
                 </PanelBody>
-                <PanelBody className="editor-panel-background-settings" title={ bgTitle }>
+                <PanelBody className="editor-panel-background-settings" title={ getPanelTitle( 'background', __( 'Background' ) ) }>
                     <BaseControl label={ __('Background Image') }>
                         <MediaUploadCheck fallback={ bgInstructions }>
                             <MediaUpload
@@ -288,9 +255,7 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                                 label={ __( 'Background Position' ) }
                                 value={ bgPosition }
                                 onChange={ ( behavior ) => {
-                                    setAttributes( {
-                                        bgPosition: behavior,
-                                    } )
+                                    setAttributes( { bgPosition: behavior } )
                                 } }
                                 options={ [
                                     { label: __('Left Top'), value: '0 0' },
@@ -308,9 +273,7 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                                 label={ __( 'Background Scroll Behavior' ) }
                                 value={ bgAttachment }
                                 onChange={ ( behavior ) => {
-                                    setAttributes( {
-                                        bgAttachment: behavior,
-                                    } )
+                                    setAttributes( { bgAttachment: behavior } )
                                 } }
                                 options={ [
                                     { label: __('Scroll (Default)'), value: 'scroll' },
@@ -320,14 +283,12 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         </Fragment>
                     }
                 </PanelBody>
-                <PanelBody className="editor-panel-color-settings" title={ colorTitle }>
+                <PanelBody className="editor-panel-color-settings" title={ getPanelTitle( 'color', __( 'Color' ) ) }>
                     <ToggleControl
                         label={ __( 'Add Text Color?' ) }
                         checked={ addTextColor }
                         onChange={ ( use ) => {
-                            setAttributes( {
-                                addTextColor: use,
-                            } );
+                            setAttributes( { addTextColor: use } );
                         } }
                     />
                     {
@@ -335,9 +296,7 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         <ColorPicker
                             color={ textColor }
                             onChangeComplete={ (color) => {
-                                setAttributes( {
-                                    textColor: color,
-                                } );
+                                setAttributes( { textColor: color } );
                             } }
                             disableAlpha
                         >
@@ -347,9 +306,7 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         label={ __( 'Add Background Color?' ) }
                         checked={ addBgColor }
                         onChange={ ( use ) => {
-                            setAttributes( {
-                                addBgColor: use,
-                            } );
+                            setAttributes( { addBgColor: use } );
                         } }
                     />
                     {
@@ -357,9 +314,7 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         <ColorPicker
                             color={ bgColor }
                             onChangeComplete={ (color) => {
-                                setAttributes( {
-                                    bgColor: color,
-                                } )
+                                setAttributes( { bgColor: color } )
                             } }
                         />
                     }
@@ -367,9 +322,7 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         label={ __( 'Add Mask Color?' ) }
                         checked={ addMaskColor }
                         onChange={ ( use ) => {
-                            setAttributes( {
-                                addMaskColor: use,
-                            } );
+                            setAttributes( { addMaskColor: use } );
                         } }
                     />
                     {
@@ -377,30 +330,22 @@ const ColumnsEdit = function( { attributes, setAttributes, className } ) {
                         <ColorPicker
                             color={ maskColor }
                             onChangeComplete={ (color) => {
-                                setAttributes( {
-                                    maskColor: color,
-                                } )
+                                setAttributes( { maskColor: color } )
                             } }
                         />
                     }
                 </PanelBody>
             </InspectorControls>
-            <div
-                className={ getContainerClass( attributes, ( className || "" ) + " overflow-visible" ) }
-                style={ getBackgroundStyles( attributes ) }
-            >
-                <div
-                    className="grid-mask--container embed-responsive-item"
-                    style={ {
-                        backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ),
-                    } }
-                />
-                <div className={ getRowClass( attributes ) }>
-                    <InnerBlocks
-                        template={ getColumnsTemplate( columns ) }
-                        templateLock='all'
-                        allowedBlocks={ ALLOWED_BLOCKS }
-                    />
+            <div className={ getContainerClass( attributes, `${ className } overflow-visible` ) } style={ getBackgroundStyles( attributes ) }>
+                <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
+                <div className="bootstrap-grid--column">
+                    <div className={ getRowClass( attributes ) }>
+                        <InnerBlocks
+                            template={ getColumnsTemplate( columns ) }
+                            templateLock='all'
+                            allowedBlocks={ ALLOWED_BLOCKS }
+                        />
+                    </div>
                 </div>
             </div>
         </Fragment>

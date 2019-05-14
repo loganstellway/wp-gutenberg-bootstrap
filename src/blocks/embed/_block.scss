@@ -1,0 +1,28 @@
+// Tallest (allows responsive as min-height)
+.tallest {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-align: left;
+  white-space: nowrap;
+
+  .tallest-item {
+    width: 100%;
+    margin-right: -100%;
+    white-space: normal;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &.align-top {
+    .tallest-item {
+      vertical-align: top;
+    }
+  }
+
+  &.align-bottom {
+    .tallest-item {
+      vertical-align: bottom;
+    }
+  }
+}
