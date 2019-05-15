@@ -53,6 +53,26 @@
             "type": "string",
             "default": ""
         },
+        "xsOffset": {
+            "type": "number",
+            "default": 0
+        },
+        "smOffset": {
+            "type": "number",
+            "default": 0
+        },
+        "mdOffset": {
+            "type": "number",
+            "default": 0
+        },
+        "lgOffset": {
+            "type": "number",
+            "default": 0
+        },
+        "xlOffset": {
+            "type": "number",
+            "default": 0
+        },
         "xs": {
             "type": "number",
             "default": 6

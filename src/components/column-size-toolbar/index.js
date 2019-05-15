@@ -2,9 +2,12 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { Component } from '@wordpress/element';
 import { Toolbar } from '@wordpress/components';
-import { withState } from '@wordpress/compose';
 
+/**
+ * Constants
+ */
 const DEFAULT_SIZE_CONTROLS = [
     { size: 1, title: '1/12' },
     { size: 2, title: '1/6' },
@@ -38,31 +41,49 @@ const ColumnLabels = {
     all: __( 'All Breakpoints' ),
 };
 
-export default withState( {
-    size: 1,
-} )( ( { icon = false, breakpoint, isCollapsed = true, value, onChange } ) => {
-    let sizeControls = JSON.parse( JSON.stringify( DEFAULT_SIZE_CONTROLS ) );
+/**
+ * Column size toolbar
+ */
+export default class ColumnSizeToolbar extends Component {
+    getSizeControls(breakpoint) {
+        let controls = JSON.parse( JSON.stringify( DEFAULT_SIZE_CONTROLS ) );
 
-    // Add default option
-    if ( breakpoint !== 'xs' ) {
-        sizeControls.unshift( { size: 0, title: 'Default' } );
+        if ( breakpoint !== 'xs' ) {
+            controls.unshift( { size: 0, title: 'Default' } );
+        }
+
+        return controls;
     }
 
-    return (
-        <Toolbar
-            isCollapsed={ isCollapsed }
-            icon={ icon ? icon : ColumnIcons[breakpoint] }
-            label={ ColumnLabels[breakpoint] }
-            controls={ sizeControls.map( ( control ) => {
-                const { size } = control;
-                return {
-                    ...control,
-                    isActive: value === size,
-                    onClick: () => {
-                        onChange( size );
-                    },
-                };
-            } ) }
-        />
-    );
-} );
+    render() {
+        // Props
+        const {
+            value,
+            onChange,
+            breakpoint,
+            icon = false,
+            isCollapsed = true,
+            options = this.getSizeControls( this.props.breakpoint || null ),
+        } = this.props;
+
+        return (
+            <Toolbar
+                isCollapsed={ isCollapsed }
+                icon={ icon ? icon : ColumnIcons[breakpoint] }
+                label={ ColumnLabels[breakpoint] }
+                controls={ options.map( ( option ) => {
+                    const active = value == option.size;
+
+                    return {
+                        ...option,
+                        icon: active ? 'yes-alt' : 'marker',
+                        isActive: active,
+                        onClick: () => {
+                            onChange( option.size );
+                        },
+                    };
+                } ) }
+                />
+        );
+    }
+}

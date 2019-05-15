@@ -95,9 +95,12 @@ export const getColumnClass = ( attributes, className = null ) => {
 
     const align = getResponsiveAttribute( attributes, 'align-items', 'Align' ),
           content = getResponsiveAttribute( attributes, 'align-content', 'Content' ),
-          columns = getResponsiveAttribute( attributes, 'col', '' );
+          columns = getResponsiveAttribute( attributes, 'col', '' ),
+          offsets = getResponsiveAttribute( attributes, 'offset', 'Offset' ).map( (offset) => {
+            return offset || undefined;
+          });
 
-    return classnames( className, align, content, columns, 'position-relative', ( textAlign ? `text-${ textAlign }` : null ) );
+    return classnames( className, align, content, columns, offsets, 'position-relative', ( textAlign ? `text-${ textAlign }` : null ) );
 };
 
 /**
@@ -159,7 +162,7 @@ export const getBackgroundStyles = ( attributes ) => {
         color: (addTextColor && textColor ? textColor.hex : null),
         backgroundSize: "cover",
         backgroundAttachment: bgAttachment,
-        backgroundImage: bgUrl ? `url(${ bgUrl })` : '',
+        backgroundImage: bgUrl ? `url(${ bgUrl })` : null,
         backgroundColor: addBgColor && bgColor ? getBackgroundColor( bgColor ) : null,
         backgroundPosition: bgPosition,
     };
@@ -174,4 +177,13 @@ export const getPanelTitle = ( id, title ) => {
             { title }
         </span>
     )
+};
+
+/**
+ * Get button class
+ * @param  {object} attributes
+ * @return {string}
+ */
+export const getButtonClass = ( attributes ) => {
+    return '';
 };

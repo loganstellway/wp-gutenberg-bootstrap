@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+import { Component } from '@wordpress/element';
 import { InnerBlocks } from '@wordpress/editor';
 
 /**
@@ -8,15 +9,19 @@ import { InnerBlocks } from '@wordpress/editor';
  */
 import { getContainerClass, getRowClass, getBackgroundColor, getBackgroundStyles } from '../utils';
 
-export default function( { attributes, className } ) {
-    return (
-        <div className={ getContainerClass( attributes, className ) } style={ getBackgroundStyles( attributes ) }>
-            <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( attributes.maskColor ) } } />
-            <div className="bootstrap-grid--content">
-                <div className={ getRowClass( attributes ) }>
-                    <InnerBlocks.Content />
+export default class GridSave extends Component {
+    render() {
+        const { attributes, className } = this.props;
+
+        return (
+            <div className={ getContainerClass( attributes, className ) } style={ getBackgroundStyles( attributes ) }>
+                <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( attributes.maskColor ) } } />
+                <div className="bootstrap-grid--content">
+                    <div className={ getRowClass( attributes ) }>
+                        <InnerBlocks.Content />
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 }

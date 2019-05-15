@@ -2,9 +2,12 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { Component } from '@wordpress/element';
 import { Toolbar } from '@wordpress/components';
-import { withState } from '@wordpress/compose';
 
+/**
+ * Constants
+ */
 const DEFAULT_OPTIONS = [
     { value: '', title: 'Default' },
     { value: 'start', title: 'Start' },
@@ -32,24 +35,39 @@ const ColumnLabels = {
     all: __( 'All Breakpoints' ),
 };
 
-export default withState( {
-    value: '',
-} )( ( { icon = false, breakpoint, isCollapsed = true, value, onChange, dirOptions = DEFAULT_OPTIONS } ) => {
-    return (
-        <Toolbar
-            isCollapsed={ isCollapsed }
-            icon={ icon ? icon : ColumnIcons[breakpoint] }
-            label={ ColumnLabels[breakpoint] }
-            controls={ dirOptions.map( ( control ) => {
-                const { value } = control;
-                return {
-                    ...control,
-                    isActive: value === value,
-                    onClick: () => {
-                        onChange( value );
-                    },
-                };
-            } ) }
-        />
-    );
-} );
+/**
+ * Vertical align toolbar
+ */
+export default class VerticalAlignToolbar extends Component {
+    render() {
+        // Props
+        const {
+            value,
+            onChange,
+            breakpoint,
+            icon = false,
+            isCollapsed = true,
+            options = DEFAULT_OPTIONS,
+        } = this.props;
+
+        return (
+            <Toolbar
+                isCollapsed={ isCollapsed }
+                icon={ icon ? icon : ColumnIcons[breakpoint] }
+                label={ ColumnLabels[breakpoint] }
+                controls={ options.map( ( option ) => {
+                    const active = value == option.value;
+
+                    return {
+                        ...option,
+                        icon: active ? 'yes-alt' : 'marker',
+                        isActive: active,
+                        onClick: () => {
+                            onChange( option.value );
+                        },
+                    };
+                } ) }
+            />
+        );
+    }
+}

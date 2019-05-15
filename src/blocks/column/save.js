@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+import { Component } from '@wordpress/element';
 import { InnerBlocks } from '@wordpress/editor';
 
 /**
@@ -8,15 +9,23 @@ import { InnerBlocks } from '@wordpress/editor';
  */
 import { getColumnClass, getBackgroundColor, getBackgroundStyles } from '../utils';
 
-export default function( { attributes, className } ) {
-    const { addMaskColor, maskColor } = attributes;
+/**
+ * Column save
+ */
+export default class ColumnSave extends Component {
+    render() {
+        // Props
+        const { attributes, className } = this.props;
+        // Attributes
+        const { addMaskColor, maskColor } = attributes;
 
-    return (
-        <div className={ getColumnClass( attributes, className ) } style={ getBackgroundStyles( attributes ) }>
-            <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
-            <div className="bootstrap-grid--content">
-                <InnerBlocks.Content />
+        return (
+            <div className={ getColumnClass( attributes, className ) } style={ getBackgroundStyles( attributes ) }>
+                <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
+                <div className="bootstrap-grid--content">
+                    <InnerBlocks.Content />
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
