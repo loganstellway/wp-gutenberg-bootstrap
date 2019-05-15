@@ -6,7 +6,7 @@ import { Component, Fragment, createRef } from '@wordpress/element';
 import { InspectorControls, BlockControls, AlignmentToolbar, InnerBlocks, MediaUpload, MediaUploadCheck } from '@wordpress/editor';
 import { withSelect } from '@wordpress/data';
 import { compose, createHigherOrderComponent } from '@wordpress/compose';
-import { BaseControl, PanelBody, ToggleControl, SelectControl, ColorPicker, Button, ButtonGroup } from '@wordpress/components';
+import { BaseControl, PanelBody, PanelRow, ToggleControl, SelectControl, ColorPicker, Button, ButtonGroup } from '@wordpress/components';
 import { addFilter } from '@wordpress/hooks';
 
 /**
@@ -22,7 +22,6 @@ import AlignContentToolbar from '../../components/align-content-toolbar';
  * Constants
  */
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
-const bgInstructions = <p>{ __( 'To edit the background image, you need permission to upload media.' ) }</p>;
 const breakpoints = [ 'xs', 'sm', 'md', 'lg', 'xl' ];
 
 /**
@@ -110,144 +109,122 @@ class ColumnEdit extends Component {
                     <PanelBody className="editor-panel-size-settings" title={ getPanelTitle( 'size', __( 'Size & Offset' ) ) } initialOpen={ false }>
                         <BaseControl label={ __('Column Size') }>
                             <div style={ { overflowX: 'auto' } }>
-                                <table style={ { width: '100%' } }>
-                                    <tbody>
-                                        <tr>
-                                            { breakpoints.map( (breakpoint) => {
-                                                return (
-                                                    <td key={ breakpoint }>
-                                                        <ColumnSizeToolbar
-                                                            breakpoint={ breakpoint }
-                                                            value={ attributes[ breakpoint ] }
-                                                            onChange={ ( val ) => {
-                                                                let data = {};
-                                                                data[ breakpoint ] = val;
-                                                                setAttributes( data );
-                                                            } }
-                                                            />
-                                                    </td>
-                                                );
-                                            } ) }
-                                            <td key="all">
-                                                <ColumnSizeToolbar
-                                                    breakpoint='all'
-                                                    onChange={ ( val ) => {
-                                                        let data = { sm: val, md: val, lg: val, xl: val };
-                                                        data[ 'xs' ] = val ? val : 6;
-                                                        setAttributes( data );
-                                                    } }
-                                                    />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <PanelRow className="align-items-start">
+                                    { breakpoints.map( (breakpoint) => {
+                                        return (
+                                            <ColumnSizeToolbar
+                                                key={ breakpoint }
+                                                breakpoint={ breakpoint }
+                                                value={ attributes[ breakpoint ] }
+                                                onChange={ ( val ) => {
+                                                    let data = {};
+                                                    data[ breakpoint ] = val;
+                                                    setAttributes( data );
+                                                } }
+                                                />
+                                        );
+                                    } ) }
+                                    <ColumnSizeToolbar
+                                        key='all'
+                                        breakpoint='all'
+                                        onChange={ ( val ) => {
+                                            let data = { sm: val, md: val, lg: val, xl: val };
+                                            data[ 'xs' ] = val ? val : 6;
+                                            setAttributes( data );
+                                        } }
+                                        />
+                                </PanelRow>
                             </div>
                         </BaseControl>
                         <BaseControl label={ __('Column Offset') }>
                             <div style={ { overflowX: 'auto' } }>
-                                <table style={ { width: '100%' } }>
-                                    <tbody>
-                                        <tr>
-                                            { breakpoints.map( (breakpoint) => {
-                                                return (
-                                                    <td key={ breakpoint }>
-                                                        <ColumnOffsetToolbar
-                                                            breakpoint={ breakpoint }
-                                                            value={ attributes[ `${breakpoint}Offset` ] }
-                                                            onChange={ ( val ) => {
-                                                                let data = {};
-                                                                data[ `${breakpoint}Offset` ] = val;
-                                                                setAttributes( data );
-                                                            } }
-                                                            />
-                                                    </td>
-                                                );
-                                            } ) }
-                                            <td key="all">
-                                                <ColumnOffsetToolbar
-                                                    breakpoint='all'
-                                                    onChange={ ( val ) => {
-                                                        setAttributes( { xsOffset: val, smOffset: val, mdOffset: val, lgOffset: val, xlOffset: val } );
-                                                    } }
-                                                    />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <PanelRow className="align-items-start">
+                                    { breakpoints.map( (breakpoint) => {
+                                        return (
+                                            <ColumnOffsetToolbar
+                                                key={ breakpoint }
+                                                breakpoint={ breakpoint }
+                                                value={ attributes[ `${breakpoint}Offset` ] }
+                                                onChange={ ( val ) => {
+                                                    let data = {};
+                                                    data[ `${breakpoint}Offset` ] = val;
+                                                    setAttributes( data );
+                                                } }
+                                                />
+                                        );
+                                    } ) }
+                                    <ColumnOffsetToolbar
+                                        key='all'
+                                        breakpoint='all'
+                                        onChange={ ( val ) => {
+                                            setAttributes( { xsOffset: val, smOffset: val, mdOffset: val, lgOffset: val, xlOffset: val } );
+                                        } }
+                                        />
+                                </PanelRow>
                             </div>
                         </BaseControl>
                     </PanelBody>
                     <PanelBody className="editor-panel-alignment-settings" title={ getPanelTitle( 'alignment', __( 'Alignment' ) ) } initialOpen={ false }>
                         <BaseControl label={ __('Vertical Align') }>
                             <div style={ { overflowX: 'auto' } }>
-                                <table style={ { width: '100%' } }>
-                                    <tbody>
-                                        <tr>
-                                            { breakpoints.map( (breakpoint) => {
-                                                return (
-                                                    <td key={ breakpoint }>
-                                                        <VerticalAlignToolbar
-                                                            breakpoint={ breakpoint }
-                                                            value={ attributes[ `${ breakpoint }Align` ] }
-                                                            onChange={ ( val ) => {
-                                                                let data = {};
-                                                                data[ `${ breakpoint }Align` ] = val;
-                                                                setAttributes( data );
-                                                            } }
-                                                            />
-                                                    </td>
-                                                );
-                                            } ) }
-                                            <td key="all">
-                                                <VerticalAlignToolbar
-                                                    breakpoint='all'
-                                                    onChange={ ( val ) => {
-                                                        setAttributes( { xsAlign: val, smAlign: val, mdAlign: val, lgAlign: val, xlAlign: val } );
-                                                    } }
-                                                    />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <PanelRow className="align-items-start">
+                                    { breakpoints.map( (breakpoint) => {
+                                        return (
+                                            <VerticalAlignToolbar
+                                                key={ breakpoint }
+                                                breakpoint={ breakpoint }
+                                                value={ attributes[ `${ breakpoint }Align` ] }
+                                                onChange={ ( val ) => {
+                                                    let data = {};
+                                                    data[ `${ breakpoint }Align` ] = val;
+                                                    setAttributes( data );
+                                                } }
+                                                />
+                                        );
+                                    } ) }
+                                    <VerticalAlignToolbar
+                                        key='all'
+                                        breakpoint='all'
+                                        onChange={ ( val ) => {
+                                            setAttributes( { xsAlign: val, smAlign: val, mdAlign: val, lgAlign: val, xlAlign: val } );
+                                        } }
+                                        />
+                                </PanelRow>
                             </div>
                         </BaseControl>
                         <BaseControl label={ __('Horizontal Align') }>
                             <div style={ { overflowX: 'auto' } }>
-                                <table style={ { width: '100%' } }>
-                                    <tbody>
-                                        <tr>
-                                            { breakpoints.map( (breakpoint) => {
-                                                return (
-                                                    <td key={ breakpoint }>
-                                                        <AlignContentToolbar
-                                                            breakpoint={ breakpoint }
-                                                            value={ attributes[ `${ breakpoint }Content` ] }
-                                                            onChange={ ( val ) => {
-                                                                let data = {};
-                                                                data[ `${ breakpoint }Content` ] = val;
-                                                                setAttributes( data )
-                                                            } }
-                                                            />
-                                                    </td>
-                                                );
-                                            } ) }
-                                            <td key="all">
-                                                <AlignContentToolbar
-                                                    breakpoint='all'
-                                                    onChange={ ( val ) => {
-                                                        setAttributes( { xsContent: val, smContent: val, mdContent: val, lgContent: val, xlContent: val } )
-                                                    } }
-                                                    />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <PanelRow className="align-items-start">
+                                    { breakpoints.map( (breakpoint) => {
+                                        return (
+                                            <AlignContentToolbar
+                                                key={ breakpoint }
+                                                breakpoint={ breakpoint }
+                                                value={ attributes[ `${ breakpoint }Content` ] }
+                                                onChange={ ( val ) => {
+                                                    let data = {};
+                                                    data[ `${ breakpoint }Content` ] = val;
+                                                    setAttributes( data )
+                                                } }
+                                                />
+                                        );
+                                    } ) }
+                                    <AlignContentToolbar
+                                        key='all'
+                                        breakpoint='all'
+                                        onChange={ ( val ) => {
+                                            setAttributes( { xsContent: val, smContent: val, mdContent: val, lgContent: val, xlContent: val } )
+                                        } }
+                                        />
+                                </PanelRow>
                             </div>
                         </BaseControl>
                     </PanelBody>
                     <PanelBody className="editor-panel-background-settings" title={ getPanelTitle( 'background', __( 'Background' ) ) } initialOpen={ false }>
                         <BaseControl label={ __('Background Image') }>
-                            <MediaUploadCheck fallback={ bgInstructions }>
+                            <MediaUploadCheck fallback={ (
+                                <p>{ __( 'To edit the background image, you need permission to upload media.' ) }</p>
+                            ) }>
                                 <MediaUpload
                                     title={ __('Select Background Image') }
                                     onSelect={ onSelectBackground }

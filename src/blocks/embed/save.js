@@ -1,13 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { Component } from '@wordpress/element';
+import { Component, Fragment } from '@wordpress/element';
 import { InnerBlocks } from '@wordpress/editor';
-
-/**
- * External dependencies
- */
-import { Fragment } from 'react';
 
 /**
  * Internal dependencies
@@ -17,7 +12,7 @@ import { verticalAlignToFlex, getEmbedResponsiveClass, getEmbedResponsiveCustom,
 /**
  * Embed responsive save
  */
-export default class EmbedResponsiveSave {
+export default class EmbedResponsiveSave extends Component {
     render() {
         // Props
         const {

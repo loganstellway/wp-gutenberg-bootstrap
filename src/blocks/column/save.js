@@ -12,12 +12,19 @@ import { getColumnClass, getBackgroundColor, getBackgroundStyles } from '../util
 /**
  * Column save
  */
-export default class ColumnSave extends Component {
+export default class ColumnEdit extends Component {
     render() {
         // Props
-        const { attributes, className } = this.props;
+        const {
+            attributes,
+            className,
+        } = this.props;
+
         // Attributes
-        const { addMaskColor, maskColor } = attributes;
+        const {
+            addMaskColor,
+            maskColor,
+        } = attributes;
 
         return (
             <div className={ getColumnClass( attributes, className ) } style={ getBackgroundStyles( attributes ) }>

@@ -2,11 +2,11 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Component, Fragment, createRef } from '@wordpress/element';
+import { Component, Fragment } from '@wordpress/element';
 import { InspectorControls, BlockControls, AlignmentToolbar, InnerBlocks, MediaUpload, MediaUploadCheck } from '@wordpress/editor';
 import { withSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
-import { BaseControl, PanelBody, TextControl, ToggleControl, SelectControl, ColorPicker, Button, ButtonGroup } from '@wordpress/components';
+import { BaseControl, PanelBody, PanelRow, TextControl, ToggleControl, SelectControl, ColorPicker, Button, ButtonGroup } from '@wordpress/components';
 
 /**
  * Internal Dependencies
@@ -17,11 +17,6 @@ import { verticalAlignToFlex, getEmbedResponsiveClass, getEmbedResponsiveCustom,
  * Constants
  */
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
-const bgInstructions = (
-    <p>
-    { __( 'To edit the background image, you need permission to upload media.' ) }
-    </p>
-);
 
 /**
  * Column edit
@@ -62,7 +57,7 @@ class EmbedResponsiveEdit extends Component {
         const {
             attributes,
             setAttributes,
-            className
+            className,
         } = this.props;
 
         // Attributes
@@ -82,7 +77,7 @@ class EmbedResponsiveEdit extends Component {
             customX,
             customY,
             grow,
-            verticalAlign
+            verticalAlign,
         } = attributes;
 
         // Edit
@@ -90,13 +85,6 @@ class EmbedResponsiveEdit extends Component {
             <Fragment>
                 <InspectorControls>
                     <PanelBody className="editor-panel-embed-settings" title={ getPanelTitle( 'embed', __( 'Embed' ) ) } initialOpen={ false }>
-                        <ToggleControl
-                            label={ __( 'Container grows with content (beyond ratio)?' ) }
-                            checked={ grow }
-                            onChange={ ( g ) => {
-                                setAttributes( { grow: g } );
-                            } }
-                            />
                         <SelectControl
                             label={ __( 'Ratio' ) }
                             value={ ratio }
@@ -112,29 +100,23 @@ class EmbedResponsiveEdit extends Component {
                             ] }
                             />
                         { ratio == 'custom' && (
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <TextControl
-                                                value={ customX }
-                                                onChange={ ( x ) => {
-                                                    setAttributes( { customX: x } );
-                                                } }
-                                                />
-                                        </td>
-                                        <td> by </td>
-                                        <td>
-                                            <TextControl
-                                                value={ customY }
-                                                onChange={ ( y ) => {
-                                                    setAttributes( { customY: y } );
-                                                } }
-                                                />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <PanelRow className="align-items-start">
+                                <TextControl
+                                    type='number'
+                                    value={ customX }
+                                    onChange={ ( x ) => {
+                                        setAttributes( { customX: parseInt( x ) } );
+                                    } }
+                                    />
+                                <div className="p-2"> by </div>
+                                <TextControl
+                                    type='number'
+                                    value={ customY }
+                                    onChange={ ( y ) => {
+                                        setAttributes( { customY: parseInt( y ) } );
+                                    } }
+                                    />
+                            </PanelRow>
                         ) }
                         <SelectControl
                             label={ __( 'Vertical Align' ) }
@@ -149,10 +131,19 @@ class EmbedResponsiveEdit extends Component {
                                 { label: 'Bottom', value: 'bottom' },
                             ] }
                             />
+                        <ToggleControl
+                            label={ __( 'Container grows with content (beyond ratio)?' ) }
+                            checked={ grow }
+                            onChange={ ( g ) => {
+                                setAttributes( { grow: g } );
+                            } }
+                            />
                     </PanelBody>
                     <PanelBody className="editor-panel-background-settings" title={ getPanelTitle( 'background', __( 'Background' ) ) } initialOpen={ false }>
                         <BaseControl label={ __('Background Image') }>
-                            <MediaUploadCheck fallback={ bgInstructions }>
+                            <MediaUploadCheck fallback={ (
+                                <p>{ __( 'To edit the background image, you need permission to upload media.' ) }</p>
+                            ) }>
                                 <MediaUpload
                                     title={ __('Select Background Image') }
                                     onSelect={ this.onSelectBackground }
@@ -310,9 +301,6 @@ export default compose(
     withSelect( ( select, { clientId } ) => {
         const coreEditor = select( 'core/editor' );
         const { getBlocksByClientId, getBlockRootClientId } = select( 'core/editor' );
-
-        return {
-            parentColumnsBlockClientId: getBlockRootClientId( clientId ),
-        };
+        return { parentColumnsBlockClientId: getBlockRootClientId( clientId ) };
     } ),
 )( EmbedResponsiveEdit );
