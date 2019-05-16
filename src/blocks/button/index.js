@@ -16,6 +16,7 @@ const settings = {
     icon: 'admin-links',
     category,
     description: __( 'A single Twitter Bootstrap column within a grid block.' ),
+    keywords: [ __( 'bootstrap' ), __( 'button' ), __( 'link' ) ],
     attributes,
     edit,
     save,
