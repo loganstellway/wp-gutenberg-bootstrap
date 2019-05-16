@@ -1,0 +1,55 @@
+{
+    "name": "loganstellway/bootstrap-button",
+    "category": "layout",
+    "attributes": {
+        "text": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "newTab": {
+            "type": "boolean",
+            "default": false
+        },
+        "title": {
+            "type": "string"
+        },
+        "btnClass": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string",
+            "default": "btn-primary"
+        },
+        "style": {
+            "type": "string",
+            "default": "solid"
+        },
+        "size": {
+            "type": "string",
+            "default": ""
+        },
+        "textAlign": {
+            "type": "string"
+        },
+        "fullWidth": {
+            "type": "boolean",
+            "default": false
+        },
+        "btnColor": {
+            "type": "object"
+        },
+        "textColor": {
+            "type": "object"
+        },
+        "borderRadius": {
+            "type": "number",
+            "default": 0
+        },
+        "borderRadiusUnit": {
+            "type": "string",
+            "default": "px"
+        }
+    }
+}
