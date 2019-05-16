@@ -16,6 +16,7 @@ const settings = {
     icon: 'layout',
     category,
     description: __( 'Create a Twitter Bootstrap grid.' ),
+    keywords: [ __( 'bootstrap' ), __( 'grid' ), __( 'columns' ) ],
     attributes,
     edit,
     save,
