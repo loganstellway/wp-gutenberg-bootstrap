@@ -200,8 +200,8 @@ export const getButtonClass = ( attributes ) => {
  * @param  {Object} attributes
  * @return {Object}
  */
-export const getButtonStyle = ( attributes ) => {
-    const { fullWidth, type, style, btnColor, textColor, borderRadius, borderRadiusUnit, edit } = attributes;
+export const getButtonStyle = ( attributes, edit ) => {
+    const { fullWidth, type, style, btnColor, textColor, borderRadius, borderRadiusUnit } = attributes;
     let bg, text, border;
 
     if ( type == 'custom' ) {

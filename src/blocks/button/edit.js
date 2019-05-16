@@ -50,7 +50,6 @@ class ButtonEdit extends Component {
             borderRadius,
             borderRadiusUnit,
         } = attributes;
-        attributes.edit = true;
 
         return (
             <Fragment>
@@ -157,7 +156,7 @@ class ButtonEdit extends Component {
                         onChange={ ( val ) => setAttributes( { text: val } ) }
                         formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
                         className={ getButtonClass( attributes ) }
-                        style={ getButtonStyle( attributes ) }
+                        style={ getButtonStyle( attributes, true ) }
                         keepPlaceholderOnFocus
                     />
                 </div>
