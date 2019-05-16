@@ -16,6 +16,7 @@ const settings = {
     icon: 'editor-expand',
     category,
     description: __( 'Create responsive video or slideshow embeds based on the width of the parent by creating an intrinsic ratio that scales on any device.' ),
+    keywords: [ __( 'bootstrap' ), __( 'embed' ), __( 'responsive' ) ],
     attributes,
     edit,
     save,
