@@ -10,11 +10,11 @@ import edit from './edit';
 import metadata from './block.json';
 import save from './save';
 
-const { name, attributes } = metadata;
+const { name, attributes, category } = metadata;
 const settings = {
     title: __( 'Bootstrap Column' ),
     parent: [ 'loganstellway/bootstrap-grid' ],
-    category: 'layout',
+    category,
     description: __( 'A single Twitter Bootstrap column within a grid block.' ),
     supports: {
         inserter: false,

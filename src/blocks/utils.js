@@ -145,7 +145,7 @@ export const getEmbedResponsiveCustom = ( attributes ) => {
  * @param  {object} bg 
  * @return {string}
  */
-export const getBackgroundColor = ( bg ) => {
+export const getRGBColor = ( bg ) => {
     if (bg && bg.rgb) {
         return `rgba(${ [ bg.rgb.r, bg.rgb.g, bg.rgb.b, bg.rgb.a ].join(',') })`;
     }
@@ -163,7 +163,7 @@ export const getBackgroundStyles = ( attributes ) => {
         backgroundSize: "cover",
         backgroundAttachment: bgAttachment,
         backgroundImage: bgUrl ? `url(${ bgUrl })` : null,
-        backgroundColor: addBgColor && bgColor ? getBackgroundColor( bgColor ) : null,
+        backgroundColor: addBgColor && bgColor ? getRGBColor( bgColor ) : null,
         backgroundPosition: bgPosition,
     };
 };
@@ -181,9 +181,49 @@ export const getPanelTitle = ( id, title ) => {
 
 /**
  * Get button class
- * @param  {object} attributes
- * @return {string}
+ * 
+ * @param  {Object} attributes
+ * @return {String}
  */
 export const getButtonClass = ( attributes ) => {
-    return '';
-};
+    const { size, type, style, btnClass } = attributes;
+    let typeClass = type != 'custom' ? type : '';
+    if ( style == 'outline' ) {
+        typeClass = typeClass.replace( '-', '-outline-' );
+    }
+    return `btn ${ typeClass } ${ size } ${ type == '' ? btnClass : '' }`;
+}
+
+/**
+ * Get button style
+ * 
+ * @param  {Object} attributes
+ * @return {Object}
+ */
+export const getButtonStyle = ( attributes ) => {
+    const { fullWidth, type, style, btnColor, textColor, borderRadius, borderRadiusUnit, edit } = attributes;
+    let bg, text, border;
+
+    if ( type == 'custom' ) {
+        if ( style == 'solid' ) {
+            bg = border = btnColor ? getRGBColor( btnColor ) : undefined;
+            text = textColor ? getRGBColor( textColor ) : undefined;
+        } else {
+            bg = 'transparent';
+            text = border = btnColor ? getRGBColor( btnColor ) : undefined;
+        }
+    }
+
+    if ( edit && type == '' ) {
+        bg = 'linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%)';
+        text = border = '#fff';
+    }
+
+    return {
+        width: fullWidth ? '100%' : undefined,
+        color: text,
+        borderColor: border,
+        background: bg,
+        borderRadius: `${ borderRadius }${ borderRadiusUnit }`,
+    };
+}

@@ -12,7 +12,7 @@ import { addFilter } from '@wordpress/hooks';
 /**
  * Internal dependencies
  */
-import { getColumnsTemplate, getContainerClass, getRowClass, getBackgroundColor, getBackgroundStyles, getPanelTitle } from '../utils';
+import { getColumnsTemplate, getContainerClass, getRowClass, getRGBColor, getBackgroundStyles, getPanelTitle } from '../utils';
 import AlignContentToolbar from '../../components/align-content-toolbar';
 import ColumnOffsetToolbar from '../../components/column-offset-toolbar';
 import ColumnSizeToolbar from '../../components/column-size-toolbar';
@@ -417,7 +417,7 @@ class GridEdit extends Component {
                     </PanelBody>
                 </InspectorControls>
                 <div className={ getContainerClass( attributes, `${ className } overflow-visible` ) } style={ getBackgroundStyles( attributes ) }>
-                    <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
+                    <div className="bootstrap-grid--mask" style={ { backgroundColor: getRGBColor( addMaskColor ? maskColor : null ) } } />
                     <div className={ `bootstrap-grid--column ${getRowClass( attributes )}` }>
                         <InnerBlocks
                             template={ getColumnsTemplate( columns ) }

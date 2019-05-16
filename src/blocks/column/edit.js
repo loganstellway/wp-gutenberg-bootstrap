@@ -12,7 +12,7 @@ import { addFilter } from '@wordpress/hooks';
 /**
  * Internal Dependencies
  */
-import { getColumnClass, getBackgroundColor, getBackgroundStyles, getPanelTitle } from '../utils';
+import { getColumnClass, getRGBColor, getBackgroundStyles, getPanelTitle } from '../utils';
 import ColumnSizeToolbar from '../../components/column-size-toolbar';
 import ColumnOffsetToolbar from '../../components/column-offset-toolbar';
 import VerticalAlignToolbar from '../../components/vertical-align-toolbar';
@@ -36,7 +36,7 @@ addFilter( 'editor.BlockListBlock', 'loganstellway/bootstrap-column-edit-classes
             const { className, addMaskColor, maskColor } = attributes;
             return (
                 <div className={ getColumnClass( attributes, `${ className || '' } overflow-visible` ) } style={ getBackgroundStyles( attributes ) }>
-                    <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
+                    <div className="bootstrap-grid--mask" style={ { backgroundColor: getRGBColor( addMaskColor ? maskColor : null ) } } />
                     <BlockListBlock { ...props } />
                 </div>
             );

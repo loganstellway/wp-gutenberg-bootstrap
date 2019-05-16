@@ -11,7 +11,7 @@ import { BaseControl, PanelBody, PanelRow, TextControl, ToggleControl, SelectCon
 /**
  * Internal Dependencies
  */
-import { verticalAlignToFlex, getEmbedResponsiveClass, getEmbedResponsiveCustom, getBackgroundColor, getBackgroundStyles, getPanelTitle } from '../utils';
+import { verticalAlignToFlex, getEmbedResponsiveClass, getEmbedResponsiveCustom, getRGBColor, getBackgroundStyles, getPanelTitle } from '../utils';
 
 /**
  * Constants
@@ -272,7 +272,7 @@ class EmbedResponsiveEdit extends Component {
                 <div style={ { background: 'rgba(0, 0, 0, 0.03)' } }>
                     { grow && (
                         <div className={ `tallest embed-responsive overflow-visible ${ className || '' } ${ verticalAlign ? `align-${ verticalAlign }` : '' }` } style={ getBackgroundStyles( attributes ) }>
-                            <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
+                            <div className="bootstrap-grid--mask" style={ { backgroundColor: getRGBColor( addMaskColor ? maskColor : null ) } } />
                             <div className={ `tallest-item ${ getEmbedResponsiveClass( attributes ) }` }>
                                 { getEmbedResponsiveCustom( attributes ) }
                             </div>
@@ -284,7 +284,7 @@ class EmbedResponsiveEdit extends Component {
                     { !grow && (
                         <div className={ `${ getEmbedResponsiveClass( attributes, className ) } overflow-visible` } style={ getBackgroundStyles( attributes ) }>
                             { getEmbedResponsiveCustom( attributes ) }
-                            <div className={ `embed-responsive-item d-flex ${ verticalAlignToFlex( verticalAlign ) } ${ textAlign ? `text-${ textAlign }` : '' }` } style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } }>
+                            <div className={ `embed-responsive-item d-flex ${ verticalAlignToFlex( verticalAlign ) } ${ textAlign ? `text-${ textAlign }` : '' }` } style={ { backgroundColor: getRGBColor( addMaskColor ? maskColor : null ) } }>
                                 <div style={ { width: '100%' } }>
                                     <InnerBlocks templateLock={ false } />
                                 </div>

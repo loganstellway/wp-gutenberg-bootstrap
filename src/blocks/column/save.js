@@ -7,7 +7,7 @@ import { InnerBlocks } from '@wordpress/editor';
 /**
  * Internal dependencies
  */
-import { getColumnClass, getBackgroundColor, getBackgroundStyles } from '../utils';
+import { getColumnClass, getRGBColor, getBackgroundStyles } from '../utils';
 
 /**
  * Column save
@@ -28,7 +28,7 @@ export default class ColumnEdit extends Component {
 
         return (
             <div className={ getColumnClass( attributes, className ) } style={ getBackgroundStyles( attributes ) }>
-                <div className="bootstrap-grid--mask" style={ { backgroundColor: getBackgroundColor( addMaskColor ? maskColor : null ) } } />
+                <div className="bootstrap-grid--mask" style={ { backgroundColor: getRGBColor( addMaskColor ? maskColor : null ) } } />
                 <div className="bootstrap-grid--content">
                     <InnerBlocks.Content />
                 </div>
